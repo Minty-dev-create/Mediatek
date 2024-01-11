@@ -1,39 +1,46 @@
 <?php
-namespace App\Controller;
-
+namespace App\Controller\AdminFormations;
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Formation;
+use App\Form\FormationType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use DateTime;
+
 
 /**
- * Controleur des formations
+ * Controleur de l'accueil
  *
  * @author emds
  */
-class FormationsController extends AbstractController {
-    const FORMATIONS = 'pages/formations.html.twig';
+class AdminFormationsController extends AbstractController{
+      
+    const FORMATIONS = 'pages/adminformations.html.twig';
     /**
      *
      * @var FormationRepository
      */
     private $formationRepository;
     
+ 
     /**
      *
      * @var CategorieRepository
      */
     private $categorieRepository;
     
+
   public function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository) {
         $this->formationRepository = $formationRepository;
         $this->categorieRepository= $categorieRepository;
     }
     
     /**
-     * @Route("/formations", name="formations")
+     * @Route("/adminformations", name="adminformations")
      * @return Response
      */
   
@@ -94,7 +101,58 @@ class FormationsController extends AbstractController {
         ]);
     }
     
-   
+      /**
+     * @Route("/admin/suppr/{id}", name="admin.formations.suppr")
+     * @param Formation $formation
+     * @return Response
+     */
+    
+     public function suppr(Formation $formation): Response{
+        $this->formationRepository->remove($formation, true);
+        return $this->redirectToRoute("adminformations");
+    }
+
+    /**
+     * @Route ("/admin/edit/{id}", name="admin.formation.edit")
+     * @param Formation $formation
+     * @param Request $request
+     * @return Response
+     */
+
+     public function edit(Formation $formation, Request $request): Response {
+       $formFormation = $this-> createForm(FormationType::class, $formation);
+
+       $formFormation-> handleRequest($request);
+       if($formFormation-> isSubmitted() && $formFormation->isValid()) {
+        $this->formationRepository->add($formation, true);
+        return $this->redirectToRoute('adminformations');
+       }
+     return $this->render("pages/admin.formation.edit.html.twig", [
+      'formformation' => $formFormation->createView()
+     ]);
+     }
 
 
+
+     /**
+     * @Route ("/admin/ajout", name="adminformationajout")
+     * @param Formation $formation
+     * @param Request $request
+     * @return Response
+     */
+
+     public function ajout( Request $request): Response {
+        $formation = new Formation();
+        $formFormation = $this-> createForm(FormationType::class, $formation);
+ 
+        $formFormation-> handleRequest($request);
+        if($formFormation-> isSubmitted() && $formFormation->isValid()) {
+         $this->formationRepository->add($formation, true);
+         return $this->redirectToRoute('adminformations');
+        }
+      return $this->render("pages/admin.formation.ajout.html.twig", [
+        'formation' => $formation,
+       'formformation' => $formFormation->createView()
+      ]);
+      }
 }

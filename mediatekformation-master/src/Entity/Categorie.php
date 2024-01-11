@@ -77,4 +77,13 @@ class Categorie
 
         return $this;
     }
+    	   /**
+     * Méthode  __toString.
+     * Utilisée pour représenter l'objet Categorie sous forme de chaîne de caractères.
+     */
+    public function __toString(): string
+    {
+        // Retourner le nom de la playlist ou une chaîne par défaut si 'name' est null
+        return $this->name;
+    }
 }

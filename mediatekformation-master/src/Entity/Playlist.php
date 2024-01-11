@@ -112,5 +112,14 @@ class Playlist
     }
 		return $categories;
 	}
-	
+	   /**
+     * Méthode  __toString.
+     * Utilisée pour représenter l'objet Playlist sous forme de chaîne de caractères.
+     */
+    public function __toString(): string
+    {
+        // Retourner le nom de la playlist ou une chaîne par défaut si 'name' est null
+        return $this->name ;
+    }
+
 }

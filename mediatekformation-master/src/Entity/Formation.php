@@ -7,6 +7,8 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=FormationRepository::class)
@@ -27,11 +29,15 @@ class Formation
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+   
+     * @Assert\NotBlank(message="Veuillez indiquer la date de publication")
+  
      */
     private $publishedAt;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\NotBlank(message="Veuillez écrire un titre")
      */
     private $title;
 
@@ -42,11 +48,13 @@ class Formation
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     *      * @Assert\NotBlank(message="Veuillez indiquer l'Id de la vidéo")
      */
     private $videoId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Playlist::class, inversedBy="formations")
+     * @Assert\NotBlank(message="Veuillez selectionner une playlist")
      */
     private $playlist;
 
@@ -54,6 +62,24 @@ class Formation
      * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="formations")
      */
     private $categories;
+
+    
+        /**
+     * @var \DateTime|null
+     *  @Assert\NotBlank(message="La date de création est obligatoire")
+     */
+    private $dateCreation;
+
+    // Ajoutez un getter pour dateCreation
+    public function getDateCreation(): ?\DateTime {
+        return $this->dateCreation;
+    }
+
+    // Si vous avez besoin, ajoutez également un setter
+    public function setDateCreation(\DateTime $dateCreation): self {
+        $this->dateCreation = $dateCreation;
+        return $this;
+    }
 
     public function __construct()
     {

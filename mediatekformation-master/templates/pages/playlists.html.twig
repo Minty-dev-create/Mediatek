@@ -1,6 +1,6 @@
 {% extends "basefront.html.twig" %}
 {% block body %}
-    <table class="table table-striped">
+    <table class="table table-striped" caption="table">
         <thead>
             <tr>
                 <th class="text-left align-top" scope="col">
@@ -54,10 +54,18 @@
                                     &nbsp;{{ categories[c] }}                                  
                                 {% endfor %}
                             {% endif %}
-                        </td>            					
+                        </td> 
+                        <td class="text-center">
+                         {% set videos = playlists[k].formations|length %}
+                             {{videos}}
+                              <a href="{{ path('playlists.sort', {champ:'length', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                              <a href="{{ path('playlists.sort', {champ:'length', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                        </td>       
+
                         <td class="text-center">
                             <a href="{{ path('playlists.showone', {id:playlists[k].id}) }}" class="btn btn-secondary">Voir détail</a>
-                        </td> 					
+                        </td> 
+                       				
                     </tr>
                 {% endfor %}	
             {% endif %}
