@@ -32,6 +32,13 @@
                         </select>                    
                     </form>            
                 </th>
+   <td>
+                    <ul>
+                   <a href="{{ path('adminplaylistajout')}}"type="button"  class="btn btn-primary" >Ajouter une playlist
+                    </a>
+                     </ul>
+                    </td> 
+
                 <th class="text-center align-top" scope="col">
                     &nbsp;
                 </th>				
@@ -62,11 +69,21 @@
                               <a href="{{ path('playlists.sort', {champ:'length', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
                         </td>       
 
-                        <td class="text-center">
-                            <a href="{{ path('playlists.showone', {id:playlists[k].id}) }}" class="btn btn-secondary">Voir détail</a>
-                        </td> 
-                       		
+        
+   
+    <td>
+                    <ul>
+                   <a href="{{ path('admin.playlists.edit',{id:playlists[k].id})}}" type="button" class="btn btn-warning">Editer
+                    </a>
+                     </ul>
+                    </td> 
                             		
+                                       <td>
+                    <ul>
+                   <a href="{{ path('adminplaylistsuppr',{id:playlists[k].id})}}" type="button" class="btn btn-danger"onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette playlist ?');">Supprimer  
+                    </a>
+                     </ul>
+                    </td>
                     </tr>
                 {% endfor %}	
             {% endif %}

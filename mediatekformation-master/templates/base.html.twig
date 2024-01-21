@@ -11,9 +11,15 @@
         <!-- entête -->
         {% block top %}{% endblock %}
         <!-- corps -->
+{% for message in app.flashes('erreur') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
         <div class="container">
             {% block body %}{% endblock %}
         </div>
+        
         <!-- footer -->
         {% block footer %}{% endblock %}
         <!-- javascript -->

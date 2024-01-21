@@ -50,7 +50,7 @@
                     date<br />
                     <a href="{{ path('formations.sort', {champ:'publishedAt', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
                     <a href="{{ path('formations.sort', {champ:'publishedAt', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>                    
-                
+
                 </th>
                     <td>
                     <ul>
@@ -61,7 +61,7 @@
                 <th class="text-center align-top" scope="col">
                     &nbsp;
                 </th>
-                
+
             </tr>
         </thead>
         <tbody>
@@ -85,18 +85,22 @@
                         {% endfor %}
                     </td> 
 
-                    <td>
-                    <ul>
-                   <a href="{{ path('admin.formations.suppr',{id:formation.id})}}" type="button" class="btn btn-danger" onclick="suppr()">Supprimer 
-                    </a>
-                     </ul>
-                    </td>
+                 
     <td>
                     <ul>
                    <a href="{{ path('admin.formation.edit',{id:formation.id})}}" type="button" class="btn btn-warning">Editer
                     </a>
                      </ul>
                     </td> 
+   <td>
+                    <ul>
+                   <a href="{{ path('admin.formations.suppr',{id:formation.id})}}" type="button" class="btn btn-danger" 
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette playlist ?');">
+    Supprimer
+                    </a>
+                     </ul>
+                    </td>
+
 
                     <td class="text-center">
                         {{ formation.publishedatstring }}
@@ -112,5 +116,5 @@
             {% endfor %}
         </tbody>
     </table>
-   
+
 {% endblock %}

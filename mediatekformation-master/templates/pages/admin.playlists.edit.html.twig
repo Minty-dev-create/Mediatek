@@ -1,0 +1,17 @@
+{% extends "basefront.html.twig" %}
+{% block body %}
+
+
+<h2> Playlists : </h2>
+
+<div class="form-group">
+    {{ form_label(formplaylists) }}
+    {{ form_widget(formplaylists,  {'attr': {'class': 'form-control bg-white', 'readonly': 'readonly'}}) }}
+
+{{ form_start(formplaylists)}}
+
+{{ form_end(formplaylists) }}
+
+</div>
+
+{% endblock %}

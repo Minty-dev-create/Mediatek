@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller\AdminFormations;
+
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -102,7 +103,7 @@ class AdminFormationsController extends AbstractController{
     }
     
       /**
-     * @Route("/admin/suppr/{id}", name="admin.formations.suppr")
+     * @Route("/admin/suppr/formation/{id}", name="admin.formations.suppr")
      * @param Formation $formation
      * @return Response
      */
@@ -135,7 +136,7 @@ class AdminFormationsController extends AbstractController{
 
 
      /**
-     * @Route ("/admin/ajout", name="adminformationajout")
+     * @Route ("/admin/formatin/ajout", name="adminformationajout")
      * @param Formation $formation
      * @param Request $request
      * @return Response
