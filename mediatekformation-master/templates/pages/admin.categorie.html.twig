@@ -1,0 +1,56 @@
+{% extends "basefront.html.twig" %}
+{% block body %}
+
+    <table class="table table-striped" caption="table">
+        <thead>
+            <tr>
+             
+              
+                    <td>
+                    <ul>
+<form class="form-inline mt-1" method="POST" action="{{ path('admincategorieajout') }}"> 
+<div class="form-group mr-1 mb-2">
+    <input  type="text" class="sm" name="nom">
+    <button type="submit" class="btn btn-primary mb-2 btn-sm">Ajouter une catégorie </button>
+    </div>
+           </td>
+           </ul>
+                <th class="text-center align-top" scope="col">
+                    &nbsp;
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}
+                <tr class="align-middle">
+                  
+               <td class="text-left">
+               {% if categorie %}
+                     {{ categorie.name }}
+                      {% else %}
+                    Pas de catégorie
+                     {% endif %}
+                        </td>   
+                    
+</td>
+                    
+                    <td class="text-end">
+                   <a href="{{ path('admin.categorie.suppr',{id:categorie.id})}}" type="button" class="btn btn-danger" 
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette playlist ?');">
+    Supprimer
+                    </a>
+                    
+                     </td>
+                  
+                    
+                  
+  </td>   
+
+              
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
