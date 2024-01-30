@@ -2,32 +2,31 @@
 
 namespace App\Entity;
 
+
 use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToMany;
 
-/**
- * @ORM\Entity(repositoryClass=CategorieRepository::class)
- */
+#[Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+   
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: "integer")]
+    private ?int $id = null;
+    private $publishedAtString;
+    #[Column(type: "string", length: 50, nullable: true)]
+    private ?string $name = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $name;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Formation::class, mappedBy="categories")
-     */
-    private $formations;
+    #[ManyToMany(targetEntity: Formation::class, mappedBy: "categories")]
+    private Collection $formations;
+ 
 
     public function __construct()
     {
@@ -51,14 +50,14 @@ class Categorie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Formation>
-     */
     public function getFormations(): Collection
     {
         return $this->formations;
     }
-
+    public function getPublishedAtString() {
+        return $this->publishedAtString;
+    }
+    
     public function addFormation(Formation $formation): self
     {
         if (!$this->formations->contains($formation)) {
@@ -77,13 +76,9 @@ class Categorie
 
         return $this;
     }
-    	   /**
-     * Méthode  __toString.
-     * Utilisée pour représenter l'objet Categorie sous forme de chaîne de caractères.
-     */
+
     public function __toString(): string
     {
-        // Retourner le nom de la playlist ou une chaîne par défaut si 'name' est null
-        return $this->name;
+        return $this->name ?: 'N/A';
     }
 }

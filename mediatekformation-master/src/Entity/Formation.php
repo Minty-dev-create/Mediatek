@@ -1,90 +1,62 @@
 <?php
 
+
 namespace App\Entity;
 
 use App\Repository\FormationRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-/**
- * @ORM\Entity(repositoryClass=FormationRepository::class)
- */
+#[Entity(repositoryClass: FormationRepository::class)]
 class Formation
 {
-    /**
-     * Début de chemin vers les images
-     */
     private const CHEMINIMAGE = "https://i.ytimg.com/vi/";
-    
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-   
-     * @Assert\NotBlank(message="Veuillez indiquer la date de publication")
-  
-     */
-    private $publishedAt;
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: "integer")]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @Assert\NotBlank(message="Veuillez écrire un titre")
-     */
-    private $title;
+    #[Column(type: "datetime", nullable: true)]
+    #[Assert\NotBlank(message: "Veuillez indiquer la date de publication")]
+    private ?DateTimeInterface $publishedAt = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[Column(type: "string", length: 100, nullable: true)]
+    #[Assert\NotBlank(message: "Veuillez écrire un titre")]
+    private ?string $title = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     *      * @Assert\NotBlank(message="Veuillez indiquer l'Id de la vidéo")
-     */
-    private $videoId;
+    #[Column(type: "text", nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Playlist::class, inversedBy="formations")
-     * @Assert\NotBlank(message="Veuillez selectionner une playlist")
-     */
-    private $playlist;
+    #[Column(type: "string", length: 20, nullable: true)]
+    #[Assert\NotBlank(message: "Veuillez indiquer l'Id de la vidéo")]
+    private ?string $videoId = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="formations")
-     */
-    private $categories;
+    #[ManyToOne(targetEntity: Playlist::class, inversedBy: "formations")]
+    #[Assert\NotBlank(message: "Veuillez sélectionner une playlist")]
+    private ?Playlist $playlist = null;
 
-    
-        /**
-     * @var \DateTime|null
-     *  @Assert\NotBlank(message="La date de création est obligatoire")
-     */
-    private $dateCreation;
+    #[ManyToMany(targetEntity: Categorie::class, inversedBy: "formations")]
+    private Collection $categories;
 
-    // Ajoutez un getter pour dateCreation
-    public function getDateCreation(): ?\DateTime {
-        return $this->dateCreation;
-    }
-
-    // Si vous avez besoin, ajoutez également un setter
-    public function setDateCreation(\DateTime $dateCreation): self {
-        $this->dateCreation = $dateCreation;
-        return $this;
-    }
+    #[Column(type: "datetime", nullable: true)]
+    #[Assert\NotBlank(message: "La date de création est obligatoire")]
+    private ?DateTimeInterface $dateCreation = null;
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
     }
+
+    // Getters and setters...
 
     public function getId(): ?int
     {
@@ -99,15 +71,7 @@ class Formation
     public function setPublishedAt(?DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
-
         return $this;
-    }
-    
-    public function getPublishedAtString(): string {
-        if($this->publishedAt == null){
-            return "";
-        }
-        return $this->publishedAt->format('d/m/Y');
     }
 
     public function getTitle(): ?string
@@ -118,7 +82,6 @@ class Formation
     public function setTitle(?string $title): self
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -130,18 +93,7 @@ class Formation
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
         return $this;
-    }
-
-    public function getMiniature(): ?string
-    {
-        return self::CHEMINIMAGE.$this->videoId."/default.jpg";
-    }
-
-    public function getPicture(): ?string
-    {
-        return self::CHEMINIMAGE.$this->videoId."/hqdefault.jpg";
     }
 
     public function getVideoId(): ?string
@@ -152,7 +104,6 @@ class Formation
     public function setVideoId(?string $videoId): self
     {
         $this->videoId = $videoId;
-
         return $this;
     }
 
@@ -164,12 +115,40 @@ class Formation
     public function setPlaylist(?Playlist $playlist): self
     {
         $this->playlist = $playlist;
-
         return $this;
     }
 
+    public function getDateCreation(): ?DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(?DateTimeInterface $dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
+        return $this;
+    }
+    public function getPublishedAtString(): ?string
+{
+    if ($this->publishedAt === null) {
+        return null;
+    }
+
+    return $this->publishedAt->format('Y-m-d H:i:s');
+}
+
+    public function getMiniature(): ?string
+    {
+        return self::CHEMINIMAGE . $this->videoId . "/default.jpg";
+    }
+
+    public function getPicture(): ?string
+    {
+        return self::CHEMINIMAGE . $this->videoId . "/hqdefault.jpg";
+    }
+
     /**
-     * @return Collection<int, Categorie>
+     * @return Collection|Categorie[]
      */
     public function getCategories(): Collection
     {
@@ -188,7 +167,6 @@ class Formation
     public function removeCategory(Categorie $category): self
     {
         $this->categories->removeElement($category);
-
         return $this;
     }
 }

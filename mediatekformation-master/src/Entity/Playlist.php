@@ -7,32 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=PlaylistRepository::class)
- */
+#[ORM\Entity(repositoryClass: PlaylistRepository::class)]
 class Playlist
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $name;
+    #[ORM\Column(type: "string", length: 100, nullable: true)]
+    private ?string $name;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: "text", nullable: true)]
+    private ?string $description;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Formation::class, mappedBy="playlist")
-     */
-    private $formations;
+    #[ORM\OneToMany(targetEntity: Formation::class, mappedBy: "playlist")]
+    private Collection $formations;
 
     public function __construct()
     {
@@ -68,9 +58,6 @@ class Playlist
         return $this;
     }
 
-    /**
-     * @return Collection<int, Formation>
-     */
     public function getFormations(): Collection
     {
         return $this->formations;
@@ -94,32 +81,23 @@ class Playlist
     
         return $this;
     }
-    
 
-	/**
-	 * @return Collection<int, string>
-	 */
-	public function getCategoriesPlaylist() : Collection
-	{
-		$categories = new ArrayCollection();
-		foreach($this->formations as $formation){
-			$categoriesFormation = $formation->getCategories();
-		        foreach($categoriesFormation as $categorieFormation) {
-			if(!$categories->contains($categorieFormation->getName())){
-				$categories[] = $categorieFormation->getName();
-			}
-		}
+    public function getCategoriesPlaylist(): Collection
+    {
+        $categories = new ArrayCollection();
+        foreach ($this->formations as $formation) {
+            $categoriesFormation = $formation->getCategories();
+            foreach ($categoriesFormation as $categorieFormation) {
+                if (!$categories->contains($categorieFormation->getName())) {
+                    $categories[] = $categorieFormation->getName();
+                }
+            }
+        }
+        return $categories;
     }
-		return $categories;
-	}
-	   /**
-     * Méthode  __toString.
-     * Utilisée pour représenter l'objet Playlist sous forme de chaîne de caractères.
-     */
+
     public function __toString(): string
     {
-        // Retourner le nom de la playlist ou une chaîne par défaut si 'name' est null
-        return $this->name ;
+        return $this->name ?? ''; // Retourne le nom de la playlist ou une chaîne vide si 'name' est null
     }
-
 }

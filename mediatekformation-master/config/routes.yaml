@@ -1,3 +1,70 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
+# config/routes.yaml
+
+adminformations:
+    path: /adminformations
+    controller: 'App\Controller\AdminFormations\AdminFormationsController::index'
+
+ 
+admin.formations.suppr:
+  path: /admin/suppr/{id}
+  controller : 'App\Controller\AdminFormations\AdminFormationsController::suppr'
+ 
+admin.formation.edit:
+  path: /admin/edit/{id}
+  controller: 'App\Controller\AdminFormations\AdminFormationsController::edit'
+
+ 
+adminformationajout:
+  path: /admin/formation/ajout
+  controller: 'App\Controller\AdminFormations\AdminFormationsController::ajout'
+  
+adminplaylists:
+  path: /adminplaylists
+  controller: 'App\Controller\AdminPlaylistsController::index'
+
+adminplaylistsedit:
+  path : /admin/playlist/edit/id
+  controller: 'App\Controller\AdminPlaylistsController::edit'
+
+adminplaylistsuppr:
+  path: /admin/playlist/suppr/{id}
+  controller: 'App\Controller\AdminPlaylistsController::suppr'
+
+
+adminplaylistajout: 
+  path: /admin/playlist/ajout
+  controller: 'App\Controller\AdminPlaylistsController::ajout'
+
+
+admincategorie: 
+  path: /admin/categorie
+  controller:  'App\Controller\AdminCategorieController::index'
+
+
+adminsuppr:
+  path: /admin/suppr/categorie/{id}
+  controller:  'App\Controller\AdminCategorieController::suppr'
+
+    
+admincategorieajout:
+  path: /admin/categorie/ajout
+  controller: 'App\Controller\AdminCategorieController::ajout'
+
+oauth_login:
+  path: /oauth/login
+  controller: 'App\Controller\OAuthController::index'
+
+oauth_check:
+  path: /oauth/callback
+  controller: 'App\Controller\OAuthController::connectCheckAction'
+
+logout:
+  path: /logout
+  controller: 'App\Controller\OAuthController::logout'
+
+        
