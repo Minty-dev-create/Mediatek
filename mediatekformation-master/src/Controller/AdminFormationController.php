@@ -136,7 +136,7 @@ class AdminFormationsController extends AbstractController{
 
 
      /**
-     * @Route ("/admin/formatin/ajout", name="adminformationajout")
+     * @Route ("/admin/formation/ajout", name="adminformationajout")
      * @param Formation $formation
      * @param Request $request
      * @return Response

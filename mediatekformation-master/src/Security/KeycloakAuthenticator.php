@@ -16,11 +16,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
-/**
- * Description of KeycloakAuthenticator
- *
- * @author emds
- */
+
 class KeycloakAuthenticator extends OAuth2Authenticator implements AuthenticationEntryPointInterface {
 
     private $clientRegistry;
