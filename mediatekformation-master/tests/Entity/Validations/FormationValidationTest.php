@@ -6,6 +6,8 @@ use App\Entity\Formation;
 use DateTime;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+//Ne pas oublier de maj le validator qui peut etre la source de quelque bugs ! 
+
 class FormationValidationTest extends KernelTestCase
 {
     private ValidatorInterface $validator;
