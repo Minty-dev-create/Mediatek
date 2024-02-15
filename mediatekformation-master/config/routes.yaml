@@ -1,6 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+   path: /
+   controller: App\Controller\DefaultController::index
 
 
 # config/routes.yaml
@@ -15,7 +15,7 @@ admin.formations.suppr:
   controller : 'App\Controller\AdminFormations\AdminFormationsController::suppr'
  
 admin.formation.edit:
-  path: /admin/edit/{id}
+  path: /admin/formation/edit/{id}
   controller: 'App\Controller\AdminFormations\AdminFormationsController::edit'
 
  
@@ -28,8 +28,9 @@ adminplaylists:
   controller: 'App\Controller\AdminPlaylistsController::index'
 
 adminplaylistsedit:
-  path : /admin/playlist/edit/id
+  path: /admin/playlist/edit/{id}
   controller: 'App\Controller\AdminPlaylistsController::edit'
+
 
 adminplaylistsuppr:
   path: /admin/playlist/suppr/{id}
